@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import CameraUpload from '../../components/CameraUpload';
 
 export default function Home() {
@@ -8,6 +9,8 @@ export default function Home() {
       <p>Registre esse momento ❤️</p>
 
       <CameraUpload />
+
+      <Link to="/album">Ver álbum</Link>
     </main>
   );
 }
