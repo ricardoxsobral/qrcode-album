@@ -32,16 +32,23 @@ export default function CameraUpload() {
   }
 
   async function handleUpload() {
-    if (!file) {
-      return;
-    }
+  if (!file) {
+    return;
+  }
 
-    setUploading(true);
-    setSuccess(false);
-    setErrorMessage('');
+  setUploading(true);
+  setSuccess(false);
+  setErrorMessage('');
 
+  try {
     const extension = file.name.split('.').pop() || 'jpg';
-    const fileName = `${crypto.randomUUID()}.${extension}`;
+
+    const uniqueId =
+      typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+    const fileName = `${uniqueId}.${extension}`;
 
     const { error: uploadError } = await supabase.storage
       .from('photos')
@@ -49,7 +56,6 @@ export default function CameraUpload() {
 
     if (uploadError) {
       setErrorMessage(uploadError.message);
-      setUploading(false);
       return;
     }
 
@@ -65,7 +71,6 @@ export default function CameraUpload() {
 
     if (insertError) {
       setErrorMessage(insertError.message);
-      setUploading(false);
       return;
     }
 
@@ -74,12 +79,18 @@ export default function CameraUpload() {
     setName('');
     setMessage('');
     setSuccess(true);
-    setUploading(false);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+  } catch (error) {
+    setErrorMessage(
+      error instanceof Error ? error.message : 'Erro ao enviar a foto.'
+    );
+  } finally {
+    setUploading(false);
   }
+}
 
   return (
     <section className="camera-upload">
