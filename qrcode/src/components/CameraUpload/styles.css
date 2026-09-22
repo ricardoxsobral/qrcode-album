@@ -1,0 +1,161 @@
+.camera-upload {
+  padding: 20px;
+  border: 1px solid #e3dad4;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgb(54 39 30 / 8%);
+}
+
+.camera-upload__input-file {
+  display: none;
+}
+
+.camera-upload__camera-button {
+  width: 100%;
+  min-height: 120px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 2px dashed #d6c5ba;
+  border-radius: 16px;
+  text-align: left;
+  cursor: pointer;
+  color: #493c35;
+  background: #faf7f5;
+}
+
+.camera-upload__camera-icon {
+  font-size: 32px;
+}
+
+.camera-upload__camera-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.camera-upload__camera-content strong {
+  font-size: 17px;
+}
+
+.camera-upload__camera-content small {
+  font-size: 14px;
+  color: #887a72;
+}
+
+.camera-upload__preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #eee8e4;
+}
+
+.camera-upload__preview-image {
+  width: 100%;
+  max-height: 420px;
+  display: block;
+  object-fit: cover;
+}
+
+.camera-upload__change-photo {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: rgb(24 20 18 / 78%);
+}
+
+.camera-upload__fields {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.camera-upload__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.camera-upload__field span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #493c35;
+}
+
+.camera-upload__field input,
+.camera-upload__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd2cb;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  font-size: 16px;
+  color: #332b27;
+  background: #fff;
+}
+
+.camera-upload__field input {
+  height: 50px;
+  padding: 0 14px;
+}
+
+.camera-upload__field textarea {
+  min-height: 110px;
+  padding: 14px;
+  resize: vertical;
+}
+
+.camera-upload__field input:focus,
+.camera-upload__field textarea:focus {
+  border-color: #8b6f61;
+}
+
+.camera-upload__submit {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  background: #493c35;
+}
+
+.camera-upload__submit:hover:not(:disabled) {
+  background: #352b26;
+}
+
+.camera-upload__submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.camera-upload__feedback {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.camera-upload__feedback--success {
+  color: #356044;
+  background: #edf7f0;
+}
+
+.camera-upload__feedback--error {
+  color: #8b3535;
+  background: #fbeeee;
+}

@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { supabase } from '../../services/supabase';
+import './styles.css';
 
 export default function CameraUpload() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState('');
   const [name, setName] = useState('');
@@ -22,6 +25,10 @@ export default function CameraUpload() {
     setPreview(URL.createObjectURL(selectedFile));
     setSuccess(false);
     setErrorMessage('');
+  }
+
+  function handleOpenCamera() {
+    fileInputRef.current?.click();
   }
 
   async function handleUpload() {
@@ -68,47 +75,99 @@ export default function CameraUpload() {
     setMessage('');
     setSuccess(true);
     setUploading(false);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   }
 
   return (
-    <div>
+    <section className="camera-upload">
       <input
+        ref={fileInputRef}
+        className="camera-upload__input-file"
         type="file"
         accept="image/*"
         capture="environment"
         onChange={handleFileChange}
       />
 
+      {!preview && (
+        <button
+          className="camera-upload__camera-button"
+          type="button"
+          onClick={handleOpenCamera}
+        >
+          <span className="camera-upload__camera-icon">📷</span>
+
+          <span className="camera-upload__camera-content">
+            <strong>Tirar uma foto</strong>
+            <small>Abra a câmera do seu celular</small>
+          </span>
+        </button>
+      )}
+
       {preview && (
-        <div>
-          <img src={preview} alt="Preview" width="300" />
+        <div className="camera-upload__preview">
+          <img
+            className="camera-upload__preview-image"
+            src={preview}
+            alt="Prévia da foto"
+          />
+
+          <button
+            className="camera-upload__change-photo"
+            type="button"
+            onClick={handleOpenCamera}
+          >
+            Trocar foto
+          </button>
         </div>
       )}
 
-      <input
-        type="text"
-        placeholder="Seu nome"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
+      <div className="camera-upload__fields">
+        <label className="camera-upload__field">
+          <span>Seu nome</span>
 
-      <textarea
-        placeholder="Deixe uma mensagem"
-        value={message}
-        onChange={(event) => setMessage(event.target.value)}
-      />
+          <input
+            type="text"
+            placeholder="Como você se chama?"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </label>
+
+        <label className="camera-upload__field">
+          <span>Mensagem</span>
+
+          <textarea
+            placeholder="Escreva uma mensagem especial..."
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+          />
+        </label>
+      </div>
 
       <button
+        className="camera-upload__submit"
         type="button"
         onClick={handleUpload}
         disabled={!file || uploading}
       >
-        {uploading ? 'Enviando...' : 'Enviar foto'}
+        {uploading ? 'Enviando foto...' : 'Enviar foto'}
       </button>
 
-      {success && <p>Foto enviada com sucesso ❤️</p>}
+      {success && (
+        <div className="camera-upload__feedback camera-upload__feedback--success">
+          Foto enviada com sucesso ❤️
+        </div>
+      )}
 
-      {errorMessage && <p>{errorMessage}</p>}
-    </div>
+      {errorMessage && (
+        <div className="camera-upload__feedback camera-upload__feedback--error">
+          {errorMessage}
+        </div>
+      )}
+    </section>
   );
 }

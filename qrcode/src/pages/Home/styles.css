@@ -1,0 +1,74 @@
+.home {
+  min-height: 100vh;
+  padding: 32px 20px;
+  display: flex;
+  justify-content: center;
+  background: #f7f4f0;
+}
+
+.home__content {
+  width: 100%;
+  max-width: 480px;
+}
+
+.home__header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.home__eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b6f61;
+}
+
+.home__title {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.1;
+  color: #28211d;
+}
+
+.home__description {
+  max-width: 380px;
+  margin: 16px auto 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #746860;
+}
+
+.home__album-link {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid #d8cec7;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #493c35;
+  background: #fff;
+}
+
+.home__album-link:hover {
+  background: #f4efeb;
+}
+
+@media (min-width: 768px) {
+  .home {
+    align-items: center;
+    padding: 48px 24px;
+  }
+
+  .home__title {
+    font-size: 52px;
+  }
+}
