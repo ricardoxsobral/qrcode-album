@@ -5,21 +5,41 @@ import './styles.css';
 export default function Home() {
   return (
     <main className="home">
+      <div className="home__background-mark home__background-mark--left">
+        ✦
+      </div>
+
+      <div className="home__background-mark home__background-mark--right">
+        ✈
+      </div>
+
       <section className="home__content">
         <header className="home__header">
-          <span className="home__eyebrow">Compartilhe esse momento</span>
+          <span className="home__eyebrow">
+            Passaporte de memórias
+          </span>
 
-          <h1 className="home__title">Aniversário</h1>
+          <h1 className="home__title">
+            Nadine
+            <span>40 anos</span>
+          </h1>
+
+          <div className="home__divider">
+            <span />
+            <strong>♥</strong>
+            <span />
+          </div>
 
           <p className="home__description">
-            Tire uma foto, deixe sua mensagem e faça parte desse álbum especial.
+            Registre essa jornada especial com uma foto e uma mensagem.
           </p>
         </header>
 
         <CameraUpload />
 
         <Link className="home__album-link" to="/album">
-          Ver álbum da festa
+          <span>Ver passaporte de memórias</span>
+          <strong>→</strong>
         </Link>
       </section>
     </main>

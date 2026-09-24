@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../services/supabase';
 import type { Photo } from '../../types/photo';
+import PhotoCard from '../../components/PhotoCard';
 import './styles.css';
 
 export default function Album() {
@@ -56,12 +57,12 @@ export default function Album() {
             ← Voltar
           </Link>
 
-          <span className="album__eyebrow">Momentos especiais</span>
+          <span className="album__eyebrow">Passaporte de memórias</span>
 
-          <h1 className="album__title">Álbum da festa</h1>
+          <h1 className="album__title"> Momentos da jornada</h1>
 
           <p className="album__description">
-            Veja os momentos registrados durante a comemoração.
+            Cada foto é uma lembrança registrada nessa viagem especial dos 40 anos da Nadine. 
           </p>
 
           {!loading && !errorMessage && photos.length > 0 && (
@@ -100,46 +101,18 @@ export default function Album() {
         {!loading && !errorMessage && photos.length > 0 && (
           <section className="album__grid">
             {photos.map((photo) => (
-              <article className="album-card" key={photo.id}>
-                <button
-                  className="album-card__image-button"
-                  type="button"
-                  onClick={() => setSelectedPhoto(photo)}
-                  aria-label="Abrir foto"
-                >
-                  <div className="album-card__image-wrapper">
-                    <img
-                      className="album-card__image"
-                      src={photo.image_url}
-                      alt={photo.name || 'Foto da festa'}
-                      loading="lazy"
-                    />
-                  </div>
-                </button>
-
-                {(photo.name || photo.message) && (
-                  <div className="album-card__content">
-                    {photo.name && (
-                      <strong className="album-card__name">
-                        {photo.name}
-                      </strong>
-                    )}
-
-                    {photo.message && (
-                      <p className="album-card__message">
-                        {photo.message}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </article>
+              <PhotoCard
+                key={photo.id}
+                photo={photo}
+                onClick={() => setSelectedPhoto(photo)}
+              />
             ))}
           </section>
         )}
 
         {!loading && !errorMessage && photos.length > 0 && (
           <Link className="album__add-photo" to="/">
-            📷 Adicionar uma foto
+            ✈ Registrar momento
           </Link>
         )}
       </div>

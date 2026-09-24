@@ -32,68 +32,77 @@ export default function CameraUpload() {
   }
 
   async function handleUpload() {
-  if (!file) {
-    return;
-  }
-
-  setUploading(true);
-  setSuccess(false);
-  setErrorMessage('');
-
-  try {
-    const extension = file.name.split('.').pop() || 'jpg';
-
-    const uniqueId =
-      typeof crypto.randomUUID === 'function'
-        ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-    const fileName = `${uniqueId}.${extension}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('photos')
-      .upload(fileName, file);
-
-    if (uploadError) {
-      setErrorMessage(uploadError.message);
+    if (!file) {
       return;
     }
 
-    const { data: publicUrlData } = supabase.storage
-      .from('photos')
-      .getPublicUrl(fileName);
+    setUploading(true);
+    setSuccess(false);
+    setErrorMessage('');
 
-    const { error: insertError } = await supabase.from('photos').insert({
-      image_url: publicUrlData.publicUrl,
-      name: name || null,
-      message: message || null
-    });
+    try {
+      const extension = file.name.split('.').pop() || 'jpg';
 
-    if (insertError) {
-      setErrorMessage(insertError.message);
-      return;
+      const uniqueId =
+        typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+      const fileName = `${uniqueId}.${extension}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('photos')
+        .upload(fileName, file);
+
+      if (uploadError) {
+        setErrorMessage(uploadError.message);
+        return;
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('photos')
+        .getPublicUrl(fileName);
+
+      const { error: insertError } = await supabase
+        .from('photos')
+        .insert({
+          image_url: publicUrlData.publicUrl,
+          name: name || null,
+          message: message || null
+        });
+
+      if (insertError) {
+        setErrorMessage(insertError.message);
+        return;
+      }
+
+      setFile(null);
+      setPreview('');
+      setName('');
+      setMessage('');
+      setSuccess(true);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'Erro ao enviar a foto.'
+      );
+    } finally {
+      setUploading(false);
     }
-
-    setFile(null);
-    setPreview('');
-    setName('');
-    setMessage('');
-    setSuccess(true);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  } catch (error) {
-    setErrorMessage(
-      error instanceof Error ? error.message : 'Erro ao enviar a foto.'
-    );
-  } finally {
-    setUploading(false);
   }
-}
 
   return (
     <section className="camera-upload">
+      <div className="camera-upload__passport-header">
+        <span>embarque confirmado</span>
+        <strong>registro da jornada</strong>
+      </div>
+
       <input
         ref={fileInputRef}
         className="camera-upload__input-file"
@@ -109,11 +118,13 @@ export default function CameraUpload() {
           type="button"
           onClick={handleOpenCamera}
         >
-          <span className="camera-upload__camera-icon">📷</span>
+          <span className="camera-upload__camera-icon">
+            ✈
+          </span>
 
           <span className="camera-upload__camera-content">
-            <strong>Tirar uma foto</strong>
-            <small>Abra a câmera do seu celular</small>
+            <strong>Registrar momento</strong>
+            <small>Abrir câmera do celular</small>
           </span>
         </button>
       )}
@@ -138,21 +149,21 @@ export default function CameraUpload() {
 
       <div className="camera-upload__fields">
         <label className="camera-upload__field">
-          <span>Seu nome</span>
+          <span>Passageiro</span>
 
           <input
             type="text"
-            placeholder="Como você se chama?"
+            placeholder="Seu nome"
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
         </label>
 
         <label className="camera-upload__field">
-          <span>Mensagem</span>
+          <span>Mensagem da viagem</span>
 
           <textarea
-            placeholder="Escreva uma mensagem especial..."
+            placeholder="Deixe uma mensagem para a Nadine..."
             value={message}
             onChange={(event) => setMessage(event.target.value)}
           />
@@ -165,12 +176,13 @@ export default function CameraUpload() {
         onClick={handleUpload}
         disabled={!file || uploading}
       >
-        {uploading ? 'Enviando foto...' : 'Enviar foto'}
+        {uploading ? 'Registrando momento...' : 'Embarcar foto'}
       </button>
 
       {success && (
         <div className="camera-upload__feedback camera-upload__feedback--success">
-          Foto enviada com sucesso ❤️
+          <strong>Embarque confirmado</strong>
+          <span>Foto registrada no passaporte de memórias.</span>
         </div>
       )}
 

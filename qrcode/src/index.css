@@ -1,17 +1,33 @@
+:root {
+  --color-navy: #0c2d49;
+  --color-navy-dark: #071f34;
+  --color-gold: #b89145;
+  --color-gold-light: #d0ad68;
+  --color-paper: #e8d7b7;
+  --color-paper-light: #f4ead7;
+  --color-ink: #17314a;
+  --color-muted: #756b60;
+  --color-white: #fffdf8;
+}
+
 * {
   box-sizing: border-box;
 }
 
 html {
   font-family:
-    Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f7f4f0;
+    Georgia,
+    "Times New Roman",
+    serif;
+  background: var(--color-paper);
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  color: var(--color-ink);
+  background: var(--color-paper);
 }
 
 button,
@@ -20,10 +36,7 @@ textarea {
   font: inherit;
 }
 
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
+button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
