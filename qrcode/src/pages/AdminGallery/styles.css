@@ -1,0 +1,128 @@
+.admin-gallery {
+  min-height: 100vh;
+  padding: 32px 16px 60px;
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-paper-light),
+      var(--color-paper)
+    );
+}
+
+.admin-gallery__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-gallery__header {
+  max-width: 600px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+.admin-gallery__eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.admin-gallery__header h1 {
+  margin: 0;
+  font-size: 38px;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+
+.admin-gallery__header p {
+  margin: 12px 0;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.admin-gallery__header a {
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.admin-gallery__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.admin-gallery__card {
+  overflow: hidden;
+  border: 1px solid var(--color-gold);
+  border-radius: 10px;
+  background: var(--color-paper-light);
+  box-shadow: 0 8px 24px rgb(7 31 52 / 12%);
+}
+
+.admin-gallery__card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: block;
+  object-fit: cover;
+}
+
+.admin-gallery__card-content {
+  padding: 16px;
+}
+
+.admin-gallery__card-content strong {
+  color: var(--color-navy);
+}
+
+.admin-gallery__card-content p {
+  margin: 8px 0 16px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.admin-gallery__card-content button {
+  width: 100%;
+  min-height: 46px;
+  border: 0;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  background: #8d3030;
+}
+
+.admin-gallery__card-content button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.admin-gallery__error {
+  max-width: 500px;
+  margin: 0 auto 24px;
+  padding: 14px;
+  border-radius: 6px;
+  text-align: center;
+  color: #7c2d2d;
+  background: #f4dada;
+}
+
+.admin-gallery__status {
+  text-align: center;
+  color: var(--color-ink);
+}
+
+@media (min-width: 600px) {
+  .admin-gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .admin-gallery__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
