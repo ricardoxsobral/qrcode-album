@@ -63,13 +63,14 @@ export default function CameraUpload() {
         .from('photos')
         .getPublicUrl(fileName);
 
-      const { error: insertError } = await supabase
-        .from('photos')
-        .insert({
-          image_url: publicUrlData.publicUrl,
-          name: name || null,
-          message: message || null
-        });
+     const { error: insertError } = await supabase
+      .from('photos')
+      .insert({
+        image_url: publicUrlData.publicUrl,
+        storage_path: fileName,
+        name: name || null,
+        message: message || null
+      });
 
       if (insertError) {
         setErrorMessage(insertError.message);
