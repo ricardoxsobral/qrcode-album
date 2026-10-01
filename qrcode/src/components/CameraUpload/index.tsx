@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { supabase } from '../../services/supabase';
+import {compressImage} from '../../utils/compressImage';
 import './styles.css';
 
 export default function CameraUpload() {
@@ -41,18 +42,20 @@ export default function CameraUpload() {
     setErrorMessage('');
 
     try {
-      const extension = file.name.split('.').pop() || 'jpg';
+      const compressedFile = await compressImage(file);
 
       const uniqueId =
         typeof crypto.randomUUID === 'function'
           ? crypto.randomUUID()
           : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-      const fileName = `${uniqueId}.${extension}`;
+      const fileName = `${uniqueId}.jpg`;
 
       const { error: uploadError } = await supabase.storage
         .from('photos')
-        .upload(fileName, file);
+        .upload(fileName, compressedFile, {
+          contentType: 'image/jpeg'
+        });
 
       if (uploadError) {
         setErrorMessage(uploadError.message);
