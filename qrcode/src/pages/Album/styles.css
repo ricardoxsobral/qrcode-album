@@ -247,6 +247,28 @@
   box-shadow: 0 18px 50px rgb(0 0 0 / 35%);
 }
 
+.photo-modal__download {
+  min-height: 44px;
+  margin-top: 14px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-gold);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  background: var(--color-gold-light);
+}
+
+.photo-modal__download:hover {
+  background: var(--color-paper-light);
+}
+
 .photo-modal__info {
   width: 100%;
   max-width: 700px;

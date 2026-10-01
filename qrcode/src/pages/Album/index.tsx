@@ -143,6 +143,16 @@ export default function Album() {
               alt={selectedPhoto.name || 'Foto da festa'}
             />
 
+            <a
+              className="photo-modal__download"
+              href={selectedPhoto.image_url}
+              download
+              target="_blank"
+              rel="noreferrer"
+            >
+              Baixar foto
+            </a>
+
             {(selectedPhoto.name || selectedPhoto.message) && (
               <div className="photo-modal__info">
                 {selectedPhoto.name && (
