@@ -5,13 +5,6 @@ import './styles.css';
 export default function Home() {
   return (
     <main className="home">
-      <div className="home__background-mark home__background-mark--left">
-        ✦
-      </div>
-
-      <div className="home__background-mark home__background-mark--right">
-        ✈
-      </div>
 
       <section className="home__content">
         <header className="home__header">
