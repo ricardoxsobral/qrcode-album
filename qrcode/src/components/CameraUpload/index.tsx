@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { supabase } from '../../services/supabase';
-import {compressImage} from '../../utils/compressImage';
+import { compressImage } from '../../utils/compressImage';
 import './styles.css';
 
 export default function CameraUpload() {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState('');
@@ -29,7 +30,26 @@ export default function CameraUpload() {
   }
 
   function handleOpenCamera() {
-    fileInputRef.current?.click();
+    cameraInputRef.current?.click();
+  }
+
+  function handleOpenGallery() {
+    galleryInputRef.current?.click();
+  }
+
+  function handleChangePhoto() {
+    setFile(null);
+    setPreview('');
+    setSuccess(false);
+    setErrorMessage('');
+
+    if (cameraInputRef.current) {
+      cameraInputRef.current.value = '';
+    }
+
+    if (galleryInputRef.current) {
+      galleryInputRef.current.value = '';
+    }
   }
 
   async function handleUpload() {
@@ -66,14 +86,14 @@ export default function CameraUpload() {
         .from('photos')
         .getPublicUrl(fileName);
 
-     const { error: insertError } = await supabase
-      .from('photos')
-      .insert({
-        image_url: publicUrlData.publicUrl,
-        storage_path: fileName,
-        name: name || null,
-        message: message || null
-      });
+      const { error: insertError } = await supabase
+        .from('photos')
+        .insert({
+          image_url: publicUrlData.publicUrl,
+          storage_path: fileName,
+          name: name || null,
+          message: message || null
+        });
 
       if (insertError) {
         setErrorMessage(insertError.message);
@@ -86,8 +106,12 @@ export default function CameraUpload() {
       setMessage('');
       setSuccess(true);
 
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+      if (cameraInputRef.current) {
+        cameraInputRef.current.value = '';
+      }
+
+      if (galleryInputRef.current) {
+        galleryInputRef.current.value = '';
       }
     } catch (error) {
       setErrorMessage(
@@ -108,7 +132,7 @@ export default function CameraUpload() {
       </div>
 
       <input
-        ref={fileInputRef}
+        ref={cameraInputRef}
         className="camera-upload__input-file"
         type="file"
         accept="image/*"
@@ -116,21 +140,44 @@ export default function CameraUpload() {
         onChange={handleFileChange}
       />
 
-      {!preview && (
-        <button
-          className="camera-upload__camera-button"
-          type="button"
-          onClick={handleOpenCamera}
-        >
-          <span className="camera-upload__camera-icon">
-            ✈
-          </span>
+      <input
+        ref={galleryInputRef}
+        className="camera-upload__input-file"
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
 
-          <span className="camera-upload__camera-content">
-            <strong>Registrar momento</strong>
-            <small>Abrir câmera do celular</small>
-          </span>
-        </button>
+      {!preview && (
+        <div className="camera-upload__source-options">
+          <button
+            className="camera-upload__source-button"
+            type="button"
+            onClick={handleOpenCamera}
+          >
+            <span className="camera-upload__source-icon">
+              📷
+            </span>
+
+            <strong>Abrir câmera</strong>
+
+            <small>Tire uma foto agora</small>
+          </button>
+
+          <button
+            className="camera-upload__source-button"
+            type="button"
+            onClick={handleOpenGallery}
+          >
+            <span className="camera-upload__source-icon">
+              🖼️
+            </span>
+
+            <strong>Galeria</strong>
+
+            <small>Escolha uma foto</small>
+          </button>
+        </div>
       )}
 
       {preview && (
@@ -144,7 +191,7 @@ export default function CameraUpload() {
           <button
             className="camera-upload__change-photo"
             type="button"
-            onClick={handleOpenCamera}
+            onClick={handleChangePhoto}
           >
             Trocar foto
           </button>
